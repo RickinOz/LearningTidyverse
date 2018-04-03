@@ -1,0 +1,13 @@
+//Original solution: https://querypower.com/2017/03/11/r-execute-the-swiss-army-knife-of-power-query/
+//Reference to solve the rebuild/privacy issue: https://stackoverflow.com/questions/44897796/operations-on-multiple-tables-datasets-with-edit-queries-and-r-in-power-bi
+//1- Options and Settings / Options. Under Privacy, select Always ignore Privacy Level settings
+//2- Options and Settings / Data Source Settings. Select source and click Edit permissons. Set it to Public
+
+let
+    seed = KKRecipes, //Refers to another query
+    path="Y:\\Decision Support\\DepartmentUseOnly\\Operational Support\\Recipes\\Krispy Kreme\\DATA.KK.Recipes, Components and Ingredients Layers.csv", //can even have variable, be aware R.Execute() expects a string with all the R code 
+    RScript = R.Execute("write.csv(dataset,"""&path&""")",[dataset=seed]),
+    //RScript = R.Execute("write.csv(dataset,""Y:\\Decision Support\\DepartmentUseOnly\\Operational Support\\Recipes\\Krispy Kreme\\out.csv"")",[dataset=seed]),
+    out = RScript
+in
+    out
